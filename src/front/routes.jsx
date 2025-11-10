@@ -7,7 +7,7 @@ import { Layout } from "./pages/Layout";
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import { Forgot } from "./pages/Forgot";
-
+import { Reset } from "./pages/Reset"; // ⬅️ añade esto
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -16,6 +16,7 @@ export const router = createBrowserRouter(
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgot" element={<Forgot />} />
+      <Route path="/reset/:token" element={<Reset />} /> {/* ⬅️ nueva ruta */}
       <Route path="*" element={<Login />} />
     </Route>
   )
