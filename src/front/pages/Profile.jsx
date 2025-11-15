@@ -6,7 +6,9 @@ import UseLogOut from "../jsApiComponents/logout";
 import { deleteUser } from "../jsApiComponents/deleteUser";
 export const Profile = () => {
   const [user_get, setUser_get] = useState(null);
+  const [user_offlineMsg, setUser_offlineMsg] = useState("")
   const navigate = useNavigate();
+
 
   const runLogOut = () => {
     const logOut = UseLogOut()
@@ -18,27 +20,7 @@ export const Profile = () => {
     alert('Tu usuario ha sido eliminado correctamente!')
     return navigate('/register')
   }
-
-  // const token = localStorage.getItem("JWT-STORAGE-KEY");
-  // const userId = localStorage.getItem("user_id"); // guarda este valor al hacer login
-
-  // useEffect(() => {
-
-  //   const fetchUser = async () => {
-  //     try {
-  //       const resp = await fetch(`${process.env.BACKEND_URL}/api/user/${userId}`, {
-  //         headers: { Authorization: `Bearer ${token}` },
-  //       });
-  //       if (!resp.ok) throw new Error("Error fetching user");
-  //       const data = await resp.json();
-  //       setUser(data);
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   };
-  //   if (userId) fetchUser();
-  // }, [userId, token]);
-
+  
 const getUser = async () => {
   try {
     const response = await user()
@@ -61,11 +43,17 @@ const getUser = async () => {
 
   }, [])
 
-
+  const userOfflineProcedure = () =>{
+    setInterval(()=>{
+      setUser_offlineMsg("Parece que tu sesion ha caducado, vuelve a iniciar sesion.")
+    }, 5000)
+  }
   if (user_get == null)
+    userOfflineProcedure()
     return (
-      <div className="d-flex justify-content-center align-items-center vh-100">
+      <div className="d-flex justify-content-center align-items-center vh-100 flex-column gap-4">
         <Spinner animation="border" variant="dark" />
+        <p>{user_offlineMsg}</p>
       </div>
     );
 
