@@ -1,25 +1,48 @@
 import React, { useState, useEffect } from "react";
-
-const Form = ({ mode, onSubmit, successMessage }) => {
-  const [email, setEmail] = useState("");
+import "../styles/Form.css";
+import { Link } from "react-router-dom";
+const Form = ({ mode, onSubmit, successMessage, userData }) => {
+  const [email, setEmail] = useState(userData?.email || "");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [newEmail, setNewEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [errorMsn, setErrorMsn] = useState(null);
 
   useEffect(() => {
-    if (successMessage) {
-      setErrorMsn(successMessage);
+    if (successMessage) setErrorMsn(successMessage);
+    if (userData) {
+      setEmail(userData.email);
+      setNewEmail(userData.email);
     }
-  }, [successMessage]);
+  }, [successMessage, userData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (mode === "register" && password !== confirmPassword) {
+      setErrorMsn("Las contraseñas no coinciden");
+      return;
+    }
+    if (mode === "config" && newPassword && newPassword !== confirmNewPassword) {
+      setErrorMsn("Las nuevas contraseñas no coinciden");
+      return;
+    }
     try {
-      await onSubmit({ email, password, setErrorMsn });
-      setEmail("");
-      setPassword("");
+      if (mode === "config") {
+        await onSubmit({ newEmail, newPassword, setErrorMsn });
+        setPassword("");
+        setConfirmPassword("");
+        setNewPassword("");
+        setConfirmNewPassword("");
+      } else {
+        await onSubmit({ email, password, setErrorMsn });
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+      }
     } catch (error) {
       setErrorMsn(error.message || "Error");
-      console.error(error.message || "Error");
     }
   };
 

@@ -37,6 +37,34 @@ export const initialStore = () => {
     personalBote: 100.00
   }
 }
+    token: localStorage.getItem("token") || null,
+    message: null,
+    tareas: [
+      {
+        id: 1,
+        titulo: "Hacer la compra",
+        descripcion: "",
+        fecha: "2025-11-13",
+        hora: "10:00",
+        direccion: "Calle Santoña 56, Madrid",
+        invitados: ["juan@gmail.com"],
+        lat: 40.3926,
+        lng: -3.7016,
+      },
+      {
+        id: 2,
+        titulo: "Quedada para el cine",
+        descripcion: "",
+        fecha: "2025-11-14",
+        hora: "18:00",
+        direccion: "Calle del Santuario 70, Madrid",
+        invitados: ["ana@gmail.com", "luis@gmail.com"],
+        lat: 40.3926,
+        lng: -3.7016,
+      },
+    ],
+  };
+};
 
 // Reducer que maneja todas las acciones
 export default function storeReducer(store, action = {}) {
