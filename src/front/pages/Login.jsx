@@ -33,47 +33,52 @@ export function Login() {
     }
     console.log("Login (solo UI):", form);
     const data = await login(form)
-     if (data.status == 400) {
-       setErr("Usuario o contraseña incorrecta.")
-       console.log("Respuesta del server", data)
+    if (data.status == 400) {
+      setErr("Usuario o contraseña incorrecta.")
+      console.log("Respuesta del server", data)
 
-     }
-     if (data.status == 200){
-      nav("/user");
     }
+    if (data.status === 200) {
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+
+      nav("/home");
+    }
+
   };
 
-    return (
-      <AuthShell title="Iniciar sesión" subtitle="Por favor, inicia sesión para continuar">
-        {ok && <div className="alert alert-success py-2">{ok}</div>}
-        <form onSubmit={submit} noValidate>
-          <TextInput
-            name="email"
-            value={form.email}
-            onChange={onChange}
-            placeholder="email@example.com"
-          />
-          <TextInput
-            name="password"
-            value={form.password}
-            onChange={onChange}
-            placeholder="********"
-            withToggle
-          />
-          <div className="d-flex justify-content-end mb-3">
-            <Link to="/forgot" className="link-accent">
-              ¿Has olvidado la contraseña?
-            </Link>
-          </div>
-          {err && <div className="alert alert-danger py-2">{err}</div>}
-          <button className="btn btn-accent w-100">Entrar</button>
-        </form>
-        <div className="text-center mt-3">
-          <span className="link-muted">¿No tienes cuenta? </span>
-          <Link to="/register" className="link-accent">
-            Regístrate
+  return (
+    <AuthShell title="Iniciar sesión" subtitle="Por favor, inicia sesión para continuar">
+      {ok && <div className="alert alert-success py-2">{ok}</div>}
+      <form onSubmit={submit} noValidate>
+        <TextInput
+          name="email"
+          value={form.email}
+          onChange={onChange}
+          placeholder="email@example.com"
+        />
+        <TextInput
+          name="password"
+          value={form.password}
+          onChange={onChange}
+          placeholder="********"
+          withToggle
+        />
+        <div className="d-flex justify-content-end mb-3">
+          <Link to="/forgot" className="link-accent">
+            ¿Has olvidado la contraseña?
           </Link>
         </div>
-      </AuthShell>
-    );
-  }
+        {err && <div className="alert alert-danger py-2">{err}</div>}
+        <button className="btn btn-accent w-100">Entrar</button>
+      </form>
+      <div className="text-center mt-3">
+        <span className="link-muted">¿No tienes cuenta? </span>
+        <Link to="/register" className="link-accent">
+          Regístrate
+        </Link>
+      </div>
+    </AuthShell>
+  );
+}
