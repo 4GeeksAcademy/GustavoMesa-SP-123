@@ -6,11 +6,22 @@ from flask_cors import CORS
 import jwt
 
 api_user = Blueprint('apiUser', __name__)
-
-# Allow CORS requests to this API
 CORS(api_user)
 SECRET_KEY = "super-secret-key"
 
+def token_requerido(f):
+    def wrapper(*args, **kwargs):
+        auth = request.headers.get('Authorization')
+        if not auth or not auth.startswith('Bearer '):
+            return jsonify({"msg": "Token requerido"}), 401
+        token = auth.split(' ')[1]
+        try:
+            jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+        except Exception:
+            return jsonify({"msg": "Token inválido"}), 401
+        return f(*args, **kwargs)
+    wrapper.__name__ = f.__name__
+    return wrapper
 
 @api_user.route('/register', methods=['POST'])
 def crear_perfil():
@@ -22,9 +33,6 @@ def crear_perfil():
     if User.query.filter_by(email=email).first():
         return jsonify({"msg": "El usuario ya existe"}), 400
     hashed_password = generate_password_hash(password)
-
-    print(body)
-
     nuevo_perfil = User(
         email=email,
         password=hashed_password,
@@ -39,14 +47,9 @@ def crear_perfil():
         facebook=body.get("facebook"),
         instagram=body.get("instagram"),
     )
-
     db.session.add(nuevo_perfil)
     db.session.commit()
-
-    return jsonify({
-        "msg": "Perfil creado correctamente", "perfil": nuevo_perfil.serialize()
-    }), 201
-
+    return jsonify({"msg": "Perfil creado correctamente", "perfil": nuevo_perfil.serialize()}), 201
 
 @api_user.route('/login', methods=['POST'])
 def login():
@@ -62,61 +65,47 @@ def login():
         'user_id': user.id,
         'exp': datetime.now(timezone.utc) + timedelta(minutes=15)
     }, SECRET_KEY, algorithm="HS256")
-    return jsonify({"token": token, "user": user.serialize()})
+    return jsonify({"token": token, "user": user.serialize()}), 200
 
+@api_user.route('/user', methods=['GET'])
+@token_requerido
+def get_user():
+    auth = request.headers.get('Authorization')
+    token = auth.split(' ')[1]
+    payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+    user = User.query.get(payload['user_id'])
+    if not user:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+    return jsonify(user.serialize()), 200
 
-@api_user.route('/<int:user_id>/perfil', methods=['GET'])
-def get_perfil(user_id):
-    varPerfil = User.query.filter_by(user_id=user_id).first()
-    if varPerfil is None:
-        return jsonify({"msg": f"El usuario con el ID {user_id} no existe"}), 404
-
-    response_body = {
-        "Perfil": varPerfil.serialize()
-    }
-    return jsonify(response_body), 200
-
-
-@api_user.route('/<int:user_id>/perfil', methods=['PUT'])
-def editar_perfil(user_id):
-    varUser = User.query.get(user_id)
-    if varUser is None:
-        return jsonify({'msg': f'El usuario con ID {user_id} no existe'}), 404
-    varPerfil = User.query.filter_by(user_id=user_id).first()
-    if varPerfil is None:
-        return jsonify({'msg': f'El usuario con ID {user_id} no tiene perfil creado'}), 404
-    body = request.get_json(silent=True)
-    if body is None:
-        return jsonify({'msg': 'No se encuentra body, no hay datos que actualizar'}), 400
-
-    if "nombre" in body:
-        if body["nombre"].strip() == "":
-            return jsonify({'msg': 'El nombre no puede estar vacío'}), 400
-        varPerfil.nombre = body["nombre"]
-    if "foto" in body:
-        varPerfil.foto = body["foto"]
-    if "presentacion" in body:
-        varPerfil.presentacion = body["presentacion"]
-    if "telefono" in body:
-        varPerfil.telefono = body["telefono"]
-    if "edad" in body:
-        varPerfil.edad = body["edad"]
-    if "ciudad" in body:
-        varPerfil.ciudad = body["ciudad"]
-    if "genero" in body:
-        varPerfil.genero = body["genero"]
-    if "twitter" in body:
-        varPerfil.twitter = body["twitter"]
-    if "facebook" in body:
-        varPerfil.facebook = body["facebook"]
-    if "instagram" in body:
-        varPerfil.instagram = body["instagram"]
-
+@api_user.route('/user', methods=['PUT'])
+@token_requerido
+def update_user():
+    data = request.get_json()
+    auth = request.headers.get('Authorization')
+    token = auth.split(' ')[1]
+    payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+    user = User.query.get(payload['user_id'])
+    if not user:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+    if data.get('email'):
+        if User.query.filter(User.email == data['email'], User.id != user.id).first():
+            return jsonify({"msg": "El email ya está en uso"}), 400
+        user.email = data['email']
+    if data.get('password'):
+        user.password = generate_password_hash(data['password'])
+    user.name = data.get('name', user.name)
+    user.photo = data.get('photo', user.photo)
+    user.bio = data.get('bio', user.bio)
+    user.phone = data.get('phone', user.phone)
+    user.age = data.get('age', user.age)
+    user.city = data.get('city', user.city)
+    user.gender = data.get('gender', user.gender)
+    user.twitter = data.get('twitter', user.twitter)
+    user.facebook = data.get('facebook', user.facebook)
+    user.instagram = data.get('instagram', user.instagram)
     db.session.commit()
-
-    return jsonify({
-        'msg': 'Perfil actualizado correctamente', 'perfil': varPerfil.serialize()
-    }), 200
+    return jsonify({"msg": "Usuario actualizado correctamente", "perfil": user.serialize()}), 200
 
 
 @api_user.route('/Saluda', methods=['POST', 'GET'])
