@@ -1,23 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import GoogleMaps from "../components/GoogleMaps";
 
-function ModalCreateTask({ setShowTaskModal }) {
-    const { dispatch } = useGlobalReducer();
+function ModalCreateTask({ setShowTaskModal, taskType, taskToEdit = null }) {
+    const { store, dispatch } = useGlobalReducer();
+    const activeClanId = store.activeClanId;
+
+    const isEditing = !!taskToEdit;
+    const modalTitle = isEditing 
+        ? (taskType === 'user' ? "Editar Tarea Personal" : "Editar Tarea de Clan")
+        : (taskType === 'user' ? "Nueva Tarea Personal" : "Nueva Tarea de Clan");
+
+    const buttonColor = taskType === 'user' ? "btn-custom-blue" : "btn-custom-purple";
+    const buttonText = isEditing ? "Guardar Cambios" : "Crear Tarea";
+
+    // Estados
     const [titulo, setTitulo] = useState("");
     const [descripcion, setDescripcion] = useState("");
     const [direccion, setDireccion] = useState("");
     const [date, setDate] = useState("");
-    const [lat, setLat] = useState("");
-    const [lng, setLng] = useState("");
+    const [lat, setLat] = useState(20);
+    const [lng, setLng] = useState(-99);
+
     const [msg, setMsg] = useState("");
+
+    // EFECTO: Rellena el formulario si estamos editando
+    useEffect(() => {
+        if (taskToEdit) {
+            setTitulo(taskToEdit.title || "");
+            setDescripcion(taskToEdit.description || "");
+            setDireccion(taskToEdit.address || "");
+            setLat(taskToEdit.latitude || 20);
+            setLng(taskToEdit.longitude || -99);
+        } else {
+            // Limpiar si es creación nueva
+            setTitulo("");
+            setDescripcion("");
+            setDireccion("");
+        }
+    }, [taskToEdit]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setMsg("");
 
-        dispatch({ type: 'ADD_USER_TASK', payload: { title: newTaskTitle } });
 
-        setTitulo("");
+   if (!titulo.trim()) { 
+            setMsg("El título es obligatorio.");
+            return;
+        }
+  setTitulo("");
         setDescripcion("");
         setDireccion("");
         setDate("");
@@ -25,16 +57,34 @@ function ModalCreateTask({ setShowTaskModal }) {
         setLng("");
         setMsg("Tarea creada (mock)");
 
-    };
+        const payloadData = {
+            id: taskToEdit ? taskToEdit.id : undefined, // Importante para editar
+            title: titulo,
+            description: descripcion,
+            address: direccion,
+            latitude: lat,
+            longitude: lng,
+        };
 
-    const handleInvitadosChange = (e) => {
-        let value = e.target.value;
-
-        const emails = value.split(',').map(i => i.trim()).filter(i => i);
-        if (emails.length > 1 && !value.trim().endsWith(',')) {
-            value = value + ', ';
+        if (taskType === 'clan') {
+            if (!isEditing && !activeClanId) {
+                setMsg("Error: No hay clan activo.");
+                return;
+            }
+            // Dispatch específico para CLAN (Crear o Editar)
+            dispatch({ 
+                type: isEditing ? 'UPDATE_CLAN_TASK' : 'ADD_TASK_TO_CLAN', 
+                payload: { ...payloadData, clanId: activeClanId } 
+            });
+        } else {
+            // Dispatch específico para USER (Crear o Editar)
+            dispatch({ 
+                type: isEditing ? 'UPDATE_USER_TASK' : 'ADD_USER_TASK', 
+                payload: payloadData 
+            });
         }
-        setInvitados(value);
+
+        setShowTaskModal(false); 
     };
 
     return (
@@ -66,43 +116,7 @@ function ModalCreateTask({ setShowTaskModal }) {
                 <div style={{ color: "#7f00b2", marginTop: 16, textAlign: "center" }}>{msg}</div>
             </form>
         </div>
-
     );
 }
 
 export default ModalCreateTask;
-
-/* 
-
-<div className="modal" tabIndex="-1" style={{ display: "block" }}>
-                    <div className="modal-dialog modal-dialog-centered">
-                        <div className="modal-content modal-content-dark">
-                            <form onSubmit={handleAddTask}>
-                                <div className="modal-header">
-                                    <h5 className="modal-title">
-                                        Añadir Tarea de Clan
-                                    </h5>
-                                    <button type="button" className="btn-close" onClick={() => setShowTaskModal(false)}></button>
-                                </div>
-                                <div className="modal-body">
-                                    <div className="mb-3">
-                                        <label htmlFor="taskTitle" className="form-label">Título de la Tarea</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            id="taskTitle"
-                                            value={newTaskTitle}
-                                            onChange={(e) => setNewTaskTitle(e.target.value)}
-                                            required
-                                        />
-                                    </div>
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" onClick={() => setShowTaskModal(false)}>Cancelar</button>
-                                    <button type="submit" className="btn btn-custom-blue">Añadir Tarea</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-*/
