@@ -6,8 +6,8 @@ export const InternalNavbar = () => {
   const navigate = useNavigate();
 
   const handleLogOut = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user"); // opcional
+    localStorage.removeItem("JWT-STORAGE-KEY");
+    localStorage.removeItem("USER");
     navigate("/home");
   };
 
@@ -37,4 +37,3 @@ export const InternalNavbar = () => {
     </nav>
   );
 };
- 

@@ -10,14 +10,14 @@ import { Footer } from "../components/Footer";
 export const Layout = () => {
   const location = useLocation();
 
-  // ¿Estamos en página "especial" tipo splash? (si no la usáis, da igual)
+  // Si tenéis una página tipo splash
   const isSplashPage = location.pathname === "/splash";
 
-  // Calcula si hay token en cada render
-  const isLoggedIn = !!localStorage.getItem("token");
+  // Se recalcula en cada render
+ const isLoggedIn = !!localStorage.getItem("JWT-STORAGE-KEY");
 
   const renderNavbar = () => {
-    if (isSplashPage) return <Navbar />;       // splash siempre navbar público
+    if (isSplashPage) return <Navbar />;
     return isLoggedIn ? <InternalNavbar /> : <Navbar />;
   };
 
