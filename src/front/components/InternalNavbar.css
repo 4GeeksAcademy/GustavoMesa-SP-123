@@ -6,9 +6,9 @@
 }
 
 .meetfit-text {
-  color: #817DF9 !important;
+  color: #817DF9 
   text-decoration: none;
-  font-weight: 800;
+  font-weight: 1500;
   font-size: 2.9rem;
   padding: 0.4rem 1rem;
   background-color: transparent;
@@ -18,7 +18,7 @@
 
 
 .meetfit-text {
-  font-weight: 700;
+  font-weight: 1000;
   font-size: 2.5rem;
   color: #817DF9; 
   letter-spacing: 1px;
