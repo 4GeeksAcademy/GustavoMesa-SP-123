@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+// src/front/pages/Layout.jsx
+import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
 import { Navbar } from "../components/Navbar";
@@ -8,36 +9,25 @@ import { Footer } from "../components/Footer";
 
 export const Layout = () => {
   const location = useLocation();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // check the token
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-  }, []);
-
-  // check donde estamos
+  // ¿Estamos en página "especial" tipo splash? (si no la usáis, da igual)
   const isSplashPage = location.pathname === "/splash";
 
-  // render de Navbar q necesitamos
+  // Calcula si hay token en cada render
+  const isLoggedIn = !!localStorage.getItem("token");
+
   const renderNavbar = () => {
-    if (isSplashPage) return <Navbar />;
-    return isLoggedIn ? <InternalNavbar setIsLoggedIn={setIsLoggedIn} /> : <Navbar />;
+    if (isSplashPage) return <Navbar />;       // splash siempre navbar público
+    return isLoggedIn ? <InternalNavbar /> : <Navbar />;
   };
 
   return (
     <>
       <ScrollToTop />
-
-     
       {renderNavbar()}
-
-     
       <main>
         <Outlet />
       </main>
-
-      
       <Footer />
     </>
   );

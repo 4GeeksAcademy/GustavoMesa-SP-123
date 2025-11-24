@@ -57,6 +57,8 @@ CORS(
 
 GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")
 
+VITE_FRONTEND_URL = os.getenv("VITE_FRONTEND_URL")
+
 jwt = JWTManager(app)
 
 bcrypt = Bcrypt(app)
@@ -80,12 +82,12 @@ def generate_reset_token(user_id, expires_in=3600):
         "user_id": user_id,
         "exp": datetime.utcnow() + timedelta(seconds=expires_in)
     }
-    token = jwt.encode(payload, app.config['SECRET_KEY'], algorithm="HS256")
+    token = jwt.encode(payload, app.config['JWT_SECRET_KEY'], algorithm="HS256")
     return token
 
 def verify_reset_token(token):
     try:
-        payload = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
+        payload = jwt.decode(token, app.config['JWT_SECRET_KEY'], algorithms=["HS256"])
         return payload['user_id']
     except jwt.ExpiredSignatureError:
         return None
@@ -143,6 +145,56 @@ def serve_any_other_file(path):
     response.cache_control.max_age = 0  # avoid cache memory
     return response
 
+
+#FORGOT PASSWORD Y RESET PASSWORD -------------------------------
+@app.route("/api/forgot", methods=["POST"])
+def forgot_password():
+    data = request.json
+    email = data.get("email")
+    if not email:
+        return jsonify({"error": "Introduce tu email."}), 400
+
+    user = User.query.filter_by(email=email).first()
+    # Mensaje genérico para no filtrar emails
+    message = "Si existe el email, recibirás instrucciones para restablecer la contraseña."
+    if not user:
+        return jsonify({"message": message})
+
+    token = generate_reset_token(user.id)
+    reset_link = f"{os.getenv('VITE_FRONTEND_URL')}/reset/{token}"
+
+    # Email HTML
+    html_body = f"""
+    <p>Hola,</p>
+    <p>Haz clic en el siguiente enlace para restablecer tu contraseña:</p>
+    <p><a href="{reset_link}">{reset_link}</a></p>
+    <p>Si no solicitaste esto, ignora este mensaje.</p>
+    """
+
+    msg = Message("Restablece tu contraseña", recipients=[email], html=html_body)
+    mail.send(msg)
+
+    return jsonify({"message": message})
+
+@app.route("/api/reset/<token>", methods=["POST"])
+def reset_password(token):
+    data = request.json
+    new_password = data.get("password")
+    if not new_password:
+        return jsonify({"error": "Introduce la nueva contraseña."}), 400
+
+    user_id = verify_reset_token(token)
+    if not user_id:
+        return jsonify({"error": "Token inválido o expirado."}), 400
+
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "Usuario no encontrado."}), 400
+
+    user.password = generate_password_hash(new_password)
+    db.session.commit()
+    return jsonify({"message": "Contraseña restablecida correctamente."}), 200
+#FIN DE FORGOT PASSWORD Y RESET PASSWORD --------------------------------------
 
 #REPORTAR USUARIO
 @app.route('/api/report_user/<int:user_id>', methods=['POST'])
