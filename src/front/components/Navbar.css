@@ -13,9 +13,9 @@
 }
 
 .meetfit-text {
-  font-weight: 700;
+  font-weight: 900;
   font-size: 2.5rem;
-  color: #817DF9; 
+  color: #817df9; 
   letter-spacing: 1px;
   transition: color 0.3s ease, transform 0.3s ease;
   cursor: pointer;
