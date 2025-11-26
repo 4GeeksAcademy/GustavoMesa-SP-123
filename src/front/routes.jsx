@@ -15,12 +15,12 @@ import { Single } from "./pages/Single";
 import { Demo } from "./pages/Demo";
 import User from "./pages/User";
 import { Profile } from "./pages/Profile";
-import { Eventos } from "./components/Eventos"
 import { EventDetails } from "./components/EventDetails";
 import { Terms } from "./pages/Terms";
 import { Privacy } from "./pages/Privacy";
 import { FAQ } from "./pages/FAQ";
-import MyEvents from './pages/MyEvents'
+import MyEvents from './components/MyEvents'
+import { Eventos } from "./pages/Eventos";
 
 
 

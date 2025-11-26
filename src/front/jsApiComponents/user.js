@@ -2,6 +2,10 @@ export const user = async () => {
   const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
   const token = localStorage.getItem("JWT-STORAGE-KEY");
+  if (!token) {
+  return { data: null, status: 401, ok: false };
+}
+
   try {
     const response = await fetch(`${BASE_URL}api/me`, {
       headers: {

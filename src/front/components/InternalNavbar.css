@@ -17,6 +17,17 @@
   transition: all 0.3s ease;
   cursor: pointer;
 }
+.meetfit-text-custom {
+  font-weight: 1000;
+  font-size: 1.1rem; 
+  color: #001F54; 
+  letter-spacing: 2px;
+  padding: 6px 20px; 
+  border: none;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
 
 .meetfit-text:hover {
   color: #5E50F9; 

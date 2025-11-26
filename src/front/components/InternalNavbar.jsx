@@ -1,11 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./InternalNavbar.css";
-
+import { toast } from "react-toastify";
 export const InternalNavbar = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
 
   const handleLogOut = () => {
     localStorage.removeItem("JWT-STORAGE-KEY"); 
+    toast.info("👋 Sesión cerrada correctamente");
     localStorage.removeItem("USER")             
     navigate("/about");                  
   };
@@ -23,7 +24,6 @@ export const InternalNavbar = ({ setIsLoggedIn }) => {
           <Link to="/profile" className="btn custom2-btn about-btn">PERFIL</Link>
           <Link to="/mapview" className="btn custom2-btn">CREAR</Link>
           <Link to="/eventos" className="btn custom2-btn">EVENTOS</Link>
-          <Link to="/myEvents" className="btn custom2-btn">MIS EVENTOS</Link>
         </div>
 
         <div className="d-flex align-items-center gap-2 ms-auto">

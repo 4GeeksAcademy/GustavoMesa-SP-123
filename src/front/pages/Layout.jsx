@@ -5,6 +5,9 @@ import { Navbar } from "../components/Navbar";
 import { InternalNavbar } from "../components/InternalNavbar";
 import ScrollToTop from "../components/ScrollToTop";
 import { Footer } from "../components/Footer";
+import { Container } from "react-bootstrap";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Layout = () => {
   const location = useLocation();
@@ -13,7 +16,7 @@ export const Layout = () => {
   const isSplashPage = location.pathname === "/splash";
 
   // Se recalcula en cada render
- const isLoggedIn = !!localStorage.getItem("JWT-STORAGE-KEY");
+  const isLoggedIn = !!localStorage.getItem("JWT-STORAGE-KEY");
 
   const renderNavbar = () => {
     if (isSplashPage) return <Navbar />;
@@ -21,13 +24,21 @@ export const Layout = () => {
   };
 
   return (
-    <>
+    <div className="d-flex flex-column ">
       <ScrollToTop />
       {renderNavbar()}
-      <main>
+      <main className="">
         <Outlet />
       </main>
       <Footer />
-    </>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        theme="dark"
+        closeOnClick
+        pauseOnHover
+      />
+
+    </div>
   );
 };

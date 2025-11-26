@@ -1,5 +1,6 @@
 body, html {
   overflow-x: hidden !important;
+  font-size: 16px;
 }
 
 .btn-dark:hover {
@@ -11,6 +12,217 @@ body, html {
 .custom-overflow{
   overflow-y: scroll;
 }
+
+
+
+.profile-fixed-card {
+  height: 80vh;              
+  border-radius: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;           
+
+}
+.custom{
+  min-height: 75vh;
+}
+
+.profile-fixed-card::-webkit-scrollbar {
+  width: 6px;
+}
+.profile-fixed-card::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+
+}
+
+.profile-fixed-card::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
+
+}
+
+/* vvv BOTÓN NEÓN CREAR ACTIVIDAD vvv */
+.footer-cta .newsletter-form .neon-create-btn {
+  width: 90%;
+  max-width: 340px;
+  background-color: #EE6C4D !important;
+  color: #fff !important;
+  border: none !important;
+  padding: 0.9rem 1.8rem !important;
+  font-weight: 700 !important;
+  border-radius: 12px !important;
+  cursor: pointer !important;
+  box-shadow: 0 6px 0 #b94e34 !important;
+  transition: all 0.2s ease !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.footer-cta .newsletter-form .neon-create-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  background-color: #e45b3a !important;
+  box-shadow: 0 8px 0 #b94e34 !important;
+}
+
+
+.footer-cta .newsletter-form .neon-create-btn:disabled {
+  background-color: #3b3b3b !important;
+  color: #888 !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* ^^^ BOTÓN NEÓN CREAR ACTIVIDAD ^^^ */ 
+
+
+.map-layout {
+  height: 80vh;         
+  min-height: 520px;    
+  max-height: 900px;    
+  overflow: hidden;
+  padding: 10px;
+}
+
+/* 🔹 Asegura que todo el layout use el alto completo */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* 🔹 Flex estable para que el mapa NO desaparezca */
+body > div, .d-flex.flex-column {
+  min-height: 100%;
+}
+
+/* 🔹 MAIN debe crecer sin empujar ni romper vistas */
+main.custom {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* evita que empuje */
+  padding: 1rem 0;
+}
+
+/* 🔹 Evitar scroll horizontal global */
+body {
+  overflow-x: hidden;
+}
+
+/* 🌌 Card “Stable” Global Style - MeetFit */
+.profile-stable-card {
+  background: linear-gradient(145deg, #1f2124, #111214);
+  border-radius: 22px !important;
+  box-shadow: 0 4px 22px rgba(129, 125, 249, 0.25) !important;
+  padding: 30px !important;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto !important;
+  color: #e6e6e6 !important;
+}
+
+/* 🖼 Avatars con borde neon */
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #E3FE18;
+  box-shadow: 0 0 8px #E3FE18;
+}
+
+/* 🏷 Títulos dentro del Card */
+.profile-stable-card h4, 
+.profile-stable-card h5 {
+  color: #E3FE18 !important;
+}
+
+/* 🧾 Formularios dentro del card */
+.profile-stable-card form input,
+.profile-stable-card form select,
+.profile-stable-card form textarea {
+  background: #252729;
+  color: white;
+  border: 1px solid #656565;
+  border-radius: 8px;
+}
+
+.profile-stable-card form input::placeholder,
+.profile-stable-card form textarea::placeholder {
+  color: #9f9f9f;
+}
+
+
+/* === 🔮 INPUT / SELECT NEÓN UNIFICADO === */
+.mf-neon-input {
+  width: 90% !important;
+  max-width: 420px !important;
+  background: #2a2d3a !important;
+  color: #fff !important;
+  border-radius: 12px !important;
+  border: 2px solid #817DF9 !important;
+  padding: 0.8rem 1rem !important;
+  font-weight: 500 !important;
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.4), 0 0 8px transparent !important;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease !important;
+}
+
+.mf-neon-input:hover,
+.mf-neon-input:focus {
+  border-color: #E3FE18 !important;
+  box-shadow: 0 0 12px #E3FE18 !important;
+}
+
+/* Placeholder */
+.mf-neon-input::placeholder {
+  color: #ffffffb0 !important;
+}
+
+/* === 🔮 BOTÓN PEQUEÑO DE EVENTOS === */
+.mf-neon-btn-small {
+  background-color: #EE6C4D !important;
+  color: #fff !important;
+  border-radius: 10px !important;
+  padding: 4px 10px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  border: none !important;
+  box-shadow: 0 4px 0 #b94e34 !important;
+  transition: all 0.2s ease;
+}
+
+.mf-neon-btn-small:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #b94e34 !important;
+}
+
+/* Botón buscar y seleccionar */
+.mf-neon-btn-purple {
+  background-color: #817DF9 !important;
+  box-shadow: 0 4px 0 #5d5ab9 !important;
+}
+.mf-neon-btn-purple:hover {
+  box-shadow: 0 6px 0 #5d5ab9 !important;
+  transform: translateY(-2px);
+}
+
+.mf-neon-input {
+  width: 90% !important;
+  max-width: 450px !important;
+  margin: 0 auto !important;
+  display: block !important;
+  text-align: center !important;
+}
+
+
+
+
+
+
+
+
+
 /* Tema de autenticación oscuro */
 .auth-theme {
   --bg: #0f1b2b;

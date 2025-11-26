@@ -8,6 +8,8 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import AuthShell from "../components/AuthShell";
 import TextInput from "../components/TextInput";
 import { login } from "../jsApiComponents/auth"
+import { toast } from "react-toastify";
+
 
 export function Login() {
   const nav = useNavigate();
@@ -39,6 +41,7 @@ export function Login() {
 
     }
     if (data.status === 200) {
+      toast.success("🎉 Sesion iniciada correctamente.");
       nav("/home");
     }
 

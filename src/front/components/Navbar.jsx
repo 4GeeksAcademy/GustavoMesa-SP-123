@@ -12,11 +12,11 @@ export const Navbar = () => {
           MeetFit
         </Link>
 
-        <div className="d-flex align-items-center ms-auto gap-2">
+        <div className="d-flex align-items-center ms-auto gap-3 ">
           {/* <Link to="/about" className="btn custom2-btn about-btn">
             SOBRE
           </Link> */}
-          <br></br><br></br>
+          {/* <br></br><br></br> */}
           <Link to="/register" className="btn custom-btn">
             ÚNETE
           </Link>

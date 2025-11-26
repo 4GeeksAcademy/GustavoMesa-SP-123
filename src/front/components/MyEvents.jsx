@@ -1,13 +1,13 @@
 import React from 'react'
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import AuthShell from "../components/AuthShell";
-import TextInput from "../components/TextInput";
+import AuthShell from "./AuthShell";
+import TextInput from "./TextInput";
 import { login } from "../jsApiComponents/auth"
 import { Button } from 'react-bootstrap';
 import bgImg from "../assets/img/background-screens.png";
-import JoinedEvents from '../components/JoinedEvents';
-import CreatedEvents from '../components/CreatedEvents';
+import JoinedEvents from './JoinedEvents';
+import CreatedEvents from './CreatedEvents';
 
 export default function MyEvents() {
     return (
