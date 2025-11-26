@@ -110,6 +110,8 @@ export const MapView = () => {
               width: "100%",
               height: "70vh",
               minHeight: "350px",
+              marginTop: "120px",
+              marginRight: "60px",
               borderRadius: "20px",
               border: "2px solid #EE6C4D",
               borderTop: "6px solid #E3FE18",

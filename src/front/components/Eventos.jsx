@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+{/* import React, { useState, useEffect } from "react";
 import { Box, Typography, Card, CardContent, CardMedia, Button, Modal, TextField, InputLabel, Select, MenuItem, FormControl } from "@mui/material";
 import { user } from '../jsApiComponents/user'
 import { useNavigate } from "react-router-dom";
@@ -252,7 +252,8 @@ export const Eventos = () => {
             </>
           )}
         </Box>
-      </Modal>*/}
+      </Modal>
     </>
   );
 };
+*/}
