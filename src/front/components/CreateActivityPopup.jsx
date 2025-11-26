@@ -22,6 +22,8 @@ export const CreateActivityPopup = ({ show, handleClose, onActivityCreated, coor
   };
 
   const handleSubmit = async (e) => {
+    console.log("Request body:", bodyWithCoords);
+
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -35,6 +37,7 @@ export const CreateActivityPopup = ({ show, handleClose, onActivityCreated, coor
 
     try {
       const token = localStorage.getItem("JWT-STORAGE-KEY");
+      
 
 
       const bodyWithCoords = {
@@ -43,6 +46,7 @@ export const CreateActivityPopup = ({ show, handleClose, onActivityCreated, coor
         longitude: coordinates.longitude,
       };
 
+console.log("Request body:", bodyWithCoords);
 
       const resp = await fetch(`${BASE_URL}api/activities`, {
         method: "POST",
@@ -55,6 +59,7 @@ export const CreateActivityPopup = ({ show, handleClose, onActivityCreated, coor
 
       if (!resp.ok) {
         const err = await resp.json();
+        console.error("Server response error:", err);
         throw new Error(err.error || "Error creando actividad");
       }
 

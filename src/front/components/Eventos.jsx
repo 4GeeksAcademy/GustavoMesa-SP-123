@@ -25,13 +25,13 @@ export const Eventos = () => {
     { id: 8, name: "Natación para Todos", description: "Sesión de natación para todos los niveles.", sport: "Natación", image: "https://noticiasncc.com/wp-content/uploads/2024/01/183-6-CIENCIA_Natacio%CC%81n-nin%CC%83os_.jpg" },
   ];
 
-  // eventos from backendu
+  // eventos from backend
   const fetchEvents = async () => {
     try {
       const resp = await fetch(`${BASE_URL}/api/activities`);
       if (!resp.ok) throw new Error("Retrieving error");
       const data = await resp.json();
-      console.log(data)
+      console.log("Fetch events response:", data);
       setEvents(data);
       console.log(events)
     } catch (err) {
@@ -42,14 +42,12 @@ export const Eventos = () => {
 
 
 
-
-
-
   useEffect(() => {
     fetchEvents();
     window.addEventListener("activities-updated", fetchEvents);
     return () => window.removeEventListener("activities-updated", fetchEvents);
   }, []);
+  
 
   const showEventDetails = (event) => {
     console.log(event)
@@ -125,7 +123,7 @@ export const Eventos = () => {
           sx={{
             width: "60%",
             maxWidth: 450,
-            
+
             bgcolor: "#fff",
             borderRadius: 2,
           }}
@@ -144,31 +142,31 @@ export const Eventos = () => {
     sx={{
       bgcolor: "#fff",
       borderRadius: 2,
-      height: "56px",        
+      height: "56px",
       paddingLeft: "4px",
       "& fieldset": {
-        borderColor: "#C4C4C4",
+        borderColor: "#817DF9", 
+        borderWidth: "4px", 
       },
       "&:hover fieldset": {
-        borderColor: "#817DF9",
+        borderColor: "#817DF9", 
       },
       "&.Mui-focused fieldset": {
-        borderColor: "#817DF9",
-        borderWidth: "2px",
+        borderColor: "#817DF9", 
+        borderWidth: "4px", 
       },
       "& .MuiSelect-select": {
         display: "flex",
         alignItems: "center",
-        color: sportFilter ? "#000" : "#666", 
-      }
+        color: sportFilter ? "#000" : "#666",
+        borderColor: "#817DF9", 
+        borderWidth: "4px",
+      },
     }}
   >
-
     <MenuItem value="" disabled>
-      <span style={{ color: "#888" }}>Filtrar por deporte</span>
+      <span style={{ color: "#817DF9" }}>Filtrar por deporte</span>
     </MenuItem>
-
-    
     {sports.map((sport) => (
       <MenuItem key={sport} value={sport}>
         {sport}
@@ -176,6 +174,7 @@ export const Eventos = () => {
     ))}
   </Select>
 </FormControl>
+
 
         </Box>
 
@@ -233,7 +232,8 @@ export const Eventos = () => {
 
               </Box>
               <Typography variant="body2" sx={{ color: "#000000ff", fontSize: "0.75rem" }}>
-                <h6>Titulo: {event.title}</h6> <br />
+                Titulo: <strong>{event.title}</strong> 
+                <br />
                 Descripcion: {event.description} <br />
                 Participantes: {(event.participants?.length ?? 0)}/{event.max_participants ?? 0}
               </Typography>
