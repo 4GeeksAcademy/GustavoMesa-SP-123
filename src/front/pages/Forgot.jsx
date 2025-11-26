@@ -51,26 +51,8 @@ export function Forgot() {
           <div className="alert alert-success" role="alert">
             Revisa tu correo — te hemos enviado instrucciones de recuperación.
           </div>
-
-          <div className="small-note mb-2">Si ya tienes el código del email, pégalo aquí:</div>
-          <TextInput
-            name="token"
-            value={token}
-            onChange={(e)=>setToken(e.target.value)}
-            placeholder="Pega tu token aquí"
-            required={false}
-          />
-          <div className="d-grid gap-2">
-            <button type="button" className="btn btn-accent" onClick={goWithToken}>
-              Usar mi token
-            </button>
-            <button type="button" className="btn btn-accent" onClick={goWithDemo}>
-              Restablecer contraseña
-            </button>
-          </div>
-
           <div className="text-center mt-3">
-            <Link to="/login" className="link-accent">Volver al login</Link>
+            <Link to="/home" className="link-accent">Volver a MeetFit</Link>
           </div>
         </>
       )}
