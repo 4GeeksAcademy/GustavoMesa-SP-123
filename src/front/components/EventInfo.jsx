@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 
 export default function EventInfo({ event }) {
   const [show, setShow] = useState(false);
@@ -9,9 +9,10 @@ export default function EventInfo({ event }) {
 
   return (
     <>
-      <Button variant="dark" className="mt-2" onClick={handleOpen}>
+      {/* Botón abrir modal */}
+      <button className="mf-neon-btn w-100 mt-2" onClick={handleOpen}>
         Ver detalles
-      </Button>
+      </button>
 
       <Modal
         show={show}
@@ -33,22 +34,24 @@ export default function EventInfo({ event }) {
           <hr className="text-secondary" />
 
           <p className="fw-bold">Localización:</p>
-          <p>{event.latitude}, {event.longitude}</p>
+          {/* <p>{event.latitude}, {event.longitude}</p> */}
 
-          <Button
-            variant="outline-success"
-            className="mt-2"
+          {/* Botón Google Maps */}
+          <a
             href={`https://www.google.com/maps?q=${event.latitude},${event.longitude}`}
             target="_blank"
+            rel="noreferrer"
+            className="mf-neon-btn w-100 mt-2 text-center"
           >
             Ver en Google Maps 📍
-          </Button>
+          </a>
         </Modal.Body>
 
-        <Modal.Footer className="bg-dark border-0">
-          <Button variant="secondary" onClick={handleClose}>
+        <Modal.Footer className="bg-dark border-0 d-flex justify-content-center">
+          {/* Botón cerrar */}
+          <button className="mf-neon-btn w-100" onClick={handleClose}>
             Cerrar
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     </>
