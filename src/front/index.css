@@ -3,16 +3,13 @@ html {
   overflow-x: hidden !important;
   font-size: 16px;
 }
-
 .btn-dark:hover {
   background-color: #0a0a0a !important;
   border-color: #424242 !important;
 }
-
 .custom-overflow {
   overflow-y: scroll;
 }
-
 .profile-fixed-card {
   height: 80vh;
   border-radius: 20px;
@@ -22,7 +19,6 @@ html {
 .custom {
   min-height: 75vh;
 }
-
 .profile-fixed-card::-webkit-scrollbar {
   width: 6px;
 }
@@ -30,13 +26,10 @@ html {
   background: transparent;
   border-radius: 10px;
 }
-
 .profile-fixed-card::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255, 0.4);
   border-radius: 10px;
-}
-
-/* vvv BOTÓN NEÓN CREAR ACTIVIDAD vvv */
+} /* vvv BOTÓN NEÓN CREAR ACTIVIDAD vvv */
 .footer-cta .newsletter-form .neon-create-btn {
   width: 90%;
   max-width: 340px;
@@ -52,61 +45,46 @@ html {
   text-transform: uppercase;
   letter-spacing: 1px;
 }
-
 .footer-cta .newsletter-form .neon-create-btn:hover:not(:disabled) {
   transform: translateY(-3px);
   background-color: #e45b3a !important;
   box-shadow: 0 8px 0 #b94e34 !important;
 }
-
 .footer-cta .newsletter-form .neon-create-btn:disabled {
   background-color: #3b3b3b !important;
   color: #888 !important;
   cursor: not-allowed !important;
   box-shadow: none !important;
   transform: none !important;
-}
-
-/* ^^^ BOTÓN NEÓN CREAR ACTIVIDAD ^^^ */
-
+} /* ^^^ BOTÓN NEÓN CREAR ACTIVIDAD ^^^ */
 .map-layout {
   height: 80vh;
   min-height: 520px;
   max-height: 900px;
   overflow: hidden;
   padding: 10px;
-}
-
-/* 🔹 Asegura que todo el layout use el alto completo */
+} /* 🔹 Asegura que todo el layout use el alto completo */
 html,
 body,
 #root {
   height: 100%;
   margin: 0;
   padding: 0;
-}
-
-/* 🔹 Flex estable para que el mapa NO desaparezca */
+} /* 🔹 Flex estable para que el mapa NO desaparezca */
 body > div,
 .d-flex.flex-column {
   min-height: 100%;
-}
-
-/* 🔹 MAIN debe crecer sin empujar ni romper vistas */
+} /* 🔹 MAIN debe crecer sin empujar ni romper vistas */
 main.custom {
   flex: 1 1 auto;
   display: flex;
   justify-content: center;
   align-items: flex-start; /* evita que empuje */
   padding: 1rem 0;
-}
-
-/* 🔹 Evitar scroll horizontal global */
+} /* 🔹 Evitar scroll horizontal global */
 body {
   overflow-x: hidden;
-}
-
-/* 🌌 Card “Stable” Global Style - MeetFit */
+} /* 🌌 Card “Stable” Global Style - MeetFit */
 .profile-stable-card {
   background: linear-gradient(145deg, #1f2124, #111214);
   border-radius: 22px !important;
@@ -116,9 +94,7 @@ body {
   max-width: 700px;
   margin: 0 auto !important;
   color: #e6e6e6 !important;
-}
-
-/* 🖼 Avatars con borde neon */
+} /* 🖼 Avatars con borde neon */
 .profile-avatar {
   width: 120px;
   height: 120px;
@@ -126,15 +102,11 @@ body {
   object-fit: cover;
   border: 2px solid #e3fe18;
   box-shadow: 0 0 8px #e3fe18;
-}
-
-/* 🏷 Títulos dentro del Card */
+} /* 🏷 Títulos dentro del Card */
 .profile-stable-card h4,
 .profile-stable-card h5 {
   color: #e3fe18 !important;
-}
-
-/* 🧾 Formularios dentro del card */
+} /* 🧾 Formularios dentro del card */
 .profile-stable-card form input,
 .profile-stable-card form select,
 .profile-stable-card form textarea {
@@ -143,13 +115,10 @@ body {
   border: 1px solid #656565;
   border-radius: 8px;
 }
-
 .profile-stable-card form input::placeholder,
 .profile-stable-card form textarea::placeholder {
   color: #9f9f9f;
-}
-
-/* === 🔮 INPUT / SELECT NEÓN UNIFICADO === */
+} /* === 🔮 INPUT / SELECT NEÓN UNIFICADO === */
 .mf-neon-input {
   width: 90% !important;
   max-width: 420px !important;
@@ -162,19 +131,14 @@ body {
   box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.4), 0 0 8px transparent !important;
   transition: box-shadow 0.25s ease, border-color 0.25s ease !important;
 }
-
 .mf-neon-input:hover,
 .mf-neon-input:focus {
   border-color: #e3fe18 !important;
   box-shadow: 0 0 12px #e3fe18 !important;
-}
-
-/* Placeholder */
+} /* Placeholder */
 .mf-neon-input::placeholder {
   color: #ffffffb0 !important;
-}
-
-/* === 🔮 BOTÓN PEQUEÑO DE EVENTOS === */
+} /* === 🔮 BOTÓN PEQUEÑO DE EVENTOS === */
 .mf-neon-btn-small {
   background-color: #ee6c4d !important;
   color: #fff !important;
@@ -186,13 +150,10 @@ body {
   box-shadow: 0 4px 0 #b94e34 !important;
   transition: all 0.2s ease;
 }
-
 .mf-neon-btn-small:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 0 #b94e34 !important;
-}
-
-/* Botón buscar y seleccionar */
+} /* Botón buscar y seleccionar */
 .mf-neon-btn-purple {
   background-color: #817df9 !important;
   box-shadow: 0 4px 0 #5d5ab9 !important;
@@ -201,7 +162,6 @@ body {
   box-shadow: 0 6px 0 #5d5ab9 !important;
   transform: translateY(-2px);
 }
-
 .mf-neon-input {
   width: 90% !important;
   max-width: 450px !important;
@@ -228,7 +188,7 @@ body {
 
 /* Contenedor general */
 .auth-theme .auth-shell {
-  min-height: calc(100vh - 80px); 
+  min-height: calc(100vh - 80px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -250,7 +210,7 @@ body {
 .auth-card-horizontal {
   display: flex;
   gap: 40px;
-  align-items: flex-start;  
+  align-items: flex-start;
 }
 
 /* Columna del formulario */
@@ -262,7 +222,7 @@ body {
 
 /* Panel lateral sencillo */
 .auth-card-side {
-  flex: 0 0 320px;                    
+  flex: 0 0 320px;
   background: rgba(255, 255, 255, 0.04);
   border-radius: 18px;
   padding: 20px 22px;
@@ -359,7 +319,6 @@ body {
   font-weight: 600;
 }
 
-
 .auth-theme .btn-accent:hover {
   background: var(--accent-hover);
 }
@@ -412,7 +371,7 @@ body {
   }
 
   .auth-card-side {
-    display: none;  
+    display: none;
   }
 
   .auth-theme .auth-title,
