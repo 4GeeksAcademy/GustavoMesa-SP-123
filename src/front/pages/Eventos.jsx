@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Card, CardContent, CardMedia, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { sportsImages } from "../jsApiComponents/sportsImages"
+import {sportImages}  from "../jsApiComponents/sportsImages"
 
 export const Eventos = () => {
   const [events, setEvents] = useState([]);
