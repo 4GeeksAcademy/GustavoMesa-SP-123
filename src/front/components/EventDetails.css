@@ -145,7 +145,15 @@
   transform: scale(1.2);
 }
 
+.map-link {
+  text-decoration: none;
+  color: #817df9;
+  font-weight: bold;
+}
 
+.map-link:hover {
+  text-decoration: underline;
+}
 
 /* Responsywność */
 @media (max-width: 768px) {
