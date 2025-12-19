@@ -16,3 +16,14 @@ def handle_hello():
     response_body = {
         "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request" }
     return (response_body), 200
+
+@api.route('/products', methods=['POST', 'GET'])
+def products():
+    response_body = {}
+    if request.method == 'GET':
+        response_body['message'] = 'Respuesta GET de /products'
+        return response_body, 200
+    if request.method == 'POST':
+        response_body['message'] = 'Respuesta POST de /products'
+        return response_body, 201
+    return response_body, 404
