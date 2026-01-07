@@ -20,6 +20,9 @@ class Users(db.Model):
         return {
             "id": self.id,
             "email": self.email,
+            "is_active": self.is_active,
+            "first_name": self.first_name,
+            "last_name": self.last_name
             # do not serialize the password, its a security breach
         }
     
@@ -40,6 +43,13 @@ class Characters(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+           "name": self.name,
+            "height": self.height,
+            "mass": self.mass,
+            "hair_color": self.hair_color,
+            "skin_color": self.skin_color,
+            "eye_color": self.eye_color,
+            "birth_year": self.birth_year
         }
     
 class Planets(db.Model):
@@ -59,7 +69,15 @@ class Planets(db.Model):
 
     def serialize(self):
         return{
-            "id": self.id
+            "id": self.id,
+            "name": self.name,
+            "diameter": self.diameter,
+            "rotation_period": self.rotation_period,
+            "orbital_period": self.orbital_period,
+            "gravity": self.gravity,
+            "population": self.population,
+            "climate": self.climate,
+            "terrain": self.terrain
         }
     
 class CharacterFavorites(db.Model):
@@ -73,7 +91,7 @@ class CharacterFavorites(db.Model):
     #Relacion con Characters
     character_id = db.Column(db.Integer, db.ForeignKey('characters.id'))
     character_to = db.relationship('Characters', foreign_keys=[character_id],
-                               backref=db.backref('characters_to', lazy='select'))
+                                    backref=db.backref('characters_to', lazy='select'))
 
     def __repr__(self):
         return f'<Character Favorite: {self.id}>'
@@ -110,11 +128,11 @@ class Followers(db.Model):
     # Relacion con Users (following)
     following_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     following_to = db.relationship('Users', foreign_keys=[following_id],
-                              backref=db.backref('following_to', lazy='select'))
+                                   backref=db.backref('following_to', lazy='select'))
     # Relacion con Users (follower)
     follower_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     follower_to = db.relationship('Users', foreign_keys=[follower_id],
-                              backref=db.backref('follower_to', lazy='select'))
+                                  backref=db.backref('follower_to', lazy='select'))
 
     def __repr__(self):
         return f'<Follower: {self.id}>'
